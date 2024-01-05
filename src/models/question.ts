@@ -29,6 +29,10 @@ Question.init(
     options: {
       type: DataTypes.STRING,
       allowNull:true
+    },
+    answer: {
+      type: DataTypes.STRING,
+      allowNull:false
     }
   },
   { sequelize, modelName: "question", tableName: "question" }
