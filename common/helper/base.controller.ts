@@ -6,13 +6,8 @@ class BaseController {
     return res.status(code).json(data);
   }
 
-  public getErrorResult(
-    res: Response,
-    code: HttpStatusCode,
-    key: string,
-    message?: string
-  ): Response {
-    return res.status(code).json({ key, message });
+  public getErrorResult(res: Response, code: HttpStatusCode, message?: string): Response {
+    return res.status(code).json({ message });
   }
 }
 

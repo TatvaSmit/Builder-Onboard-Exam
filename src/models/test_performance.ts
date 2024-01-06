@@ -3,7 +3,7 @@ import { sequelize } from "./index";
 import { User } from "./user";
 import { Technology } from "./technology";
 
-class Test extends Model {
+class TestPerformance extends Model {
   name!: string;
   technology_id!: number;
   start_time!: Date;
@@ -13,7 +13,7 @@ class Test extends Model {
   user_id!: number;
 }
 
-Test.init(
+TestPerformance.init(
   {
     name: {
       type: DataTypes.STRING,
@@ -54,19 +54,19 @@ Test.init(
   },
   {
     sequelize,
-    modelName: "test",
-    tableName: "test",
+    modelName: "test_performance",
+    tableName: "test_performance",
   }
 );
 
-Test.belongsTo(User, {
+TestPerformance.belongsTo(User, {
   foreignKey: "user_id",
   as: "user",
 });
 
-Test.belongsTo(Technology, {
+TestPerformance.belongsTo(Technology, {
   foreignKey: "technology_id",
   as: "technology",
 });
 
-export { Test };
+export { TestPerformance };

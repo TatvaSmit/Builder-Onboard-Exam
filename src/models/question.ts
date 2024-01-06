@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
 import { QuestionType } from "../../common/helper/enum";
+import { Technology } from "./technology";
 
 class Question extends Model {
   id!: number;
@@ -8,6 +9,7 @@ class Question extends Model {
   options?: string;
   question_type!: string;
   answer!: string;
+  technology_id!: number;
 }
 
 Question.init(
@@ -23,20 +25,29 @@ Question.init(
       allowNull: false,
     },
     question_type: {
-        type: DataTypes.ENUM(QuestionType.mcq, QuestionType.subjective),
-        allowNull:false
+      type: DataTypes.ENUM(QuestionType.mcq, QuestionType.subjective),
+      allowNull: false,
     },
     options: {
       type: DataTypes.STRING,
-      allowNull:true
+      allowNull: true,
     },
     answer: {
       type: DataTypes.STRING,
-      allowNull:false
-    }
+      allowNull: false,
+    },
+    technology_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      references: {
+        model: "technology",
+        key: "id",
+      },
+    },
   },
   { sequelize, modelName: "question", tableName: "question" }
 );
 
+Question.belongsTo(Technology, { foreignKey: "technology_id", as: "technology" });
 
 export { Question };

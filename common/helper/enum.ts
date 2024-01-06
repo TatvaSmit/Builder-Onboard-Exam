@@ -19,4 +19,8 @@ enum HttpStatusCode {
   ServerError = 500,
 }
 
-export { UserRoles, QuestionType,HttpStatusCode };
+enum HttpErrorType {
+  BadRequest = "bad request",
+}
+
+export { UserRoles, QuestionType, HttpStatusCode, HttpErrorType };
