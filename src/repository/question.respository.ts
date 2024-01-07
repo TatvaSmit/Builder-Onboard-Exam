@@ -11,7 +11,7 @@ export class QuestionRepository {
   };
 
   public addQuestion = async (params: Question): Promise<Question> => {
-    return await db.Question.create(params as any);
+    return await db.Question.create(params as Question|any);
   };
 
   public updateQuestion = async (

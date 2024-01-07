@@ -2,8 +2,10 @@ import * as db from "../index";
 import { TestPerformance } from "../models/test_performance";
 
 export class TestPerformanceRepository {
-  public addTestPerformance = async (params: TestPerformance): Promise<TestPerformance> => {
-    return await db.TestPerformance.create(params as any);
+  public addTestPerformance = async (
+    params: TestPerformance
+  ): Promise<TestPerformance> => {
+    return await db.TestPerformance.create(params as TestPerformance | any);
   };
 
   public updateTestPerformance = async (
