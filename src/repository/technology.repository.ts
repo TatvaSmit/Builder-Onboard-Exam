@@ -7,6 +7,6 @@ export class TechnologyRepository {
   };
 
   public addTechnology = async (params: Technology): Promise<Technology> => {
-    return await db.Technology.create(params as any);
+    return await db.Technology.create(params as Technology | any);
   };
 }
