@@ -14,9 +14,9 @@ sequelize
   .then(() => {
     console.info("Connection has been established successfully.");
     db.sequelize
-      .sync()
+      .sync({ force: true })
       .then(() => {
-        console.log("Database synchronized.");
+        console.log("Database synchronized with the latest formate.");
       })
       .catch((err) => {
         console.error("Error synchronizing database:", err);
@@ -26,6 +26,8 @@ sequelize
     console.error(`Unable to connect to the database: ${JSON.stringify(error)}`);
   });
 
-app.listen(5000, () => {
-  console.log("test");
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`Server is started at the port ${port}`);
 });

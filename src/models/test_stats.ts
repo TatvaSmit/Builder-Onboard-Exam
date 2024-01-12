@@ -5,6 +5,7 @@ import { Test } from "./test";
 import { Question } from "./question";
 
 class TestStats extends Model {
+  id!: number;
   selected_answer?: string;
   correct_answer!: string;
   is_skipped?: boolean;
@@ -15,6 +16,12 @@ class TestStats extends Model {
 
 TestStats.init(
   {
+    id: {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
     selected_answer: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -26,7 +33,7 @@ TestStats.init(
     is_skipped: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
     test_id: {
       type: DataTypes.BIGINT,
@@ -58,20 +65,5 @@ TestStats.init(
     modelName: "test_stats",
   }
 );
-
-TestStats.belongsTo(User, {
-  foreignKey: "user_id",
-  as: "user",
-});
-
-TestStats.belongsTo(Test, {
-  foreignKey: "test_id",
-  as: "test",
-});
-
-TestStats.belongsTo(Question, {
-  foreignKey: "question_id",
-  as: "question",
-});
 
 export { TestStats };

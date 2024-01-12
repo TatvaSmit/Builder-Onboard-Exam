@@ -9,7 +9,7 @@ export const sequelize = new Sequelize(
     dialect: DbConfiguration.dialect,
     host: DbConfiguration.host,
     port: DbConfiguration.port,
-    logging: console.log,
+    logging: true,
     define: {
       timestamps: false,
     },

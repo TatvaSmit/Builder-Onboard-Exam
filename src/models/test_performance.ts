@@ -2,6 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
 import { User } from "./user";
 import { Technology } from "./technology";
+import { Test } from "./test";
 
 class TestPerformance extends Model {
   name!: string;
@@ -59,14 +60,7 @@ TestPerformance.init(
   }
 );
 
-TestPerformance.belongsTo(User, {
-  foreignKey: "user_id",
-  as: "user",
-});
-
-TestPerformance.belongsTo(Technology, {
-  foreignKey: "technology_id",
-  as: "technology",
-});
+// TestPerformance.belongsTo(Test, { foreignKey: "test_id" });
+// TestPerformance.belongsTo(Technology, { foreignKey: "technology_id" });
 
 export { TestPerformance };

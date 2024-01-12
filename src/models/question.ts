@@ -2,6 +2,9 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
 import { QuestionType } from "../../common/helper/enum";
 import { Technology } from "./technology";
+import { Test } from "./test";
+import { TestStats } from "./test_stats";
+import { TestQuestions } from "./test_questions";
 
 class Question extends Model {
   id!: number;
@@ -48,6 +51,7 @@ Question.init(
   { sequelize, modelName: "question", tableName: "question" }
 );
 
-Question.belongsTo(Technology, { foreignKey: "technology_id", as: "technology" });
+Question.hasMany(TestStats, { foreignKey: "question_Id" });
+// TestStats.belongsTo(Question, { foreignKey: "question_Id" });
 
 export { Question };

@@ -1,6 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
 import { UserRoles } from "../../common/helper/enum";
+import { TestPerformance } from "./test_performance";
+import { TestStats } from "./test_stats";
 
 class User extends Model {
   id!: number;
@@ -9,8 +11,6 @@ class User extends Model {
   email!: string;
   role!: string;
   password!: string;
-  date_created?: Date;
-  date_modified?: Date;
 }
 
 User.init(
@@ -43,11 +43,15 @@ User.init(
     },
   },
   {
+    timestamps: true,
     sequelize,
     tableName: "user",
     modelName: "user",
   }
 );
 
+User.hasMany(TestPerformance, { foreignKey: "user_id" });
+User.hasMany(TestStats, { foreignKey: "user_id" });
+TestStats.belongsTo(User, { foreignKey: "user_id" });
 
 export { User };

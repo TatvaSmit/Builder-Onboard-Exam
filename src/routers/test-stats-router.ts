@@ -4,7 +4,6 @@ import { TestStatsService } from "../services/test-stats-service";
 import { TestStatsController } from "../controllers/test-stats.controller";
 
 const testStatsRouter = express.Router();
-
 const respository: TestStatsRepository = new TestStatsRepository();
 const service: TestStatsService = new TestStatsService(respository);
 const controller: TestStatsController = new TestStatsController(service);

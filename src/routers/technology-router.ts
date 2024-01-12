@@ -10,5 +10,6 @@ const service: TechnologyService = new TechnologyService(repository);
 const controller: TechnologyController = new TechnologyController(service);
 
 technologyRouter.get("/getAll", controller.getAllTechnologies);
+technologyRouter.post('/create',controller.addNewTechnology)
 
 export default technologyRouter;

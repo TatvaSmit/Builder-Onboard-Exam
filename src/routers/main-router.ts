@@ -5,7 +5,6 @@ import technologyRouter from "./technology-router";
 import testRouter from "./test-router";
 
 const mainRouter: express.Router = express.Router();
-
 mainRouter.use("/user", userRouter);
 mainRouter.use("/question", questionRouter);
 mainRouter.use("/technology", technologyRouter);
