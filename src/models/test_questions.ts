@@ -2,6 +2,9 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../models/index";
 import { Test } from "./test";
 import { Question } from "./question";
+
+// this is junction table for questions in particular test
+
 class TestQuestions extends Model {
   id!: number;
   test_id!: number;

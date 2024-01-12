@@ -7,7 +7,7 @@ export class TestStatsService {
     this.testStatsRepository = this.testStatsRepository;
   }
 
-  public addTestStats = async (testStatsData: TestStats): Promise<TestStats> => {
+  public addTestStats = async (testStatsData: TestStats): Promise<TestStats|[number]> => {
     return this.testStatsRepository.addTestStats(testStatsData);
   };
 

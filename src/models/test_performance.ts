@@ -5,20 +5,39 @@ import { Technology } from "./technology";
 import { Test } from "./test";
 
 class TestPerformance extends Model {
-  name!: string;
+  id!: number;
   technology_id!: number;
   start_time!: Date;
-  end_time!: Date;
-  duration!: number;
-  score!: number;
+  end_time?: Date;
+  duration?: number;
+  score?: number;
   user_id!: number;
+  test_id!: number;
 }
 
 TestPerformance.init(
   {
-    name: {
-      type: DataTypes.STRING,
+    id: {
+      type: DataTypes.BIGINT,
       allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    test_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      references: {
+        model: "test",
+        key: "id",
+      },
+    },
+    user_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      references: {
+        model: "user",
+        key: "id",
+      },
     },
     technology_id: {
       type: DataTypes.BIGINT,
@@ -34,23 +53,15 @@ TestPerformance.init(
     },
     end_time: {
       type: DataTypes.DATE,
-      allowNull: false,
+      // defaultValue: null,
     },
     duration: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // defaultValue: 0,
     },
     score: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    user_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: "user",
-        key: "id",
-      },
+      // defaultValue: 0,
     },
   },
   {
@@ -59,8 +70,5 @@ TestPerformance.init(
     tableName: "test_performance",
   }
 );
-
-// TestPerformance.belongsTo(Test, { foreignKey: "test_id" });
-// TestPerformance.belongsTo(Technology, { foreignKey: "technology_id" });
 
 export { TestPerformance };

@@ -51,7 +51,6 @@ Question.init(
   { sequelize, modelName: "question", tableName: "question" }
 );
 
-Question.hasMany(TestStats, { foreignKey: "question_Id" });
+// Question.hasMany(TestStats, { foreignKey: "question_Id" });
 // TestStats.belongsTo(Question, { foreignKey: "question_Id" });
-
 export { Question };

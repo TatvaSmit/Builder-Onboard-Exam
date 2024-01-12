@@ -17,9 +17,9 @@ export class TestService {
   };
 
   public addTest = async (params: Test | any): Promise<Test> => {
-    const { name, technology_id, duration }: Test = params;
+    const { name, technology_id, duration, score }: Test = params;
     return await this.testRepository.addTest(
-      { name, technology_id, duration } as any,
+      { name, technology_id, duration, score } as any,
       params.questions
     );
   };
