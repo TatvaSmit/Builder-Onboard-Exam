@@ -5,6 +5,7 @@ import { TestPerformanceController } from "../controllers/test-performance.contr
 import { testPerformanceSchema } from "../validation-schemas/test-performance-schema";
 import { celebrate } from "celebrate";
 import expressAsyncHandler from "express-async-handler";
+import { validateTokenHandler } from "../../common/helper/middleware";
 
 const { create, updateTestPerformance } = testPerformanceSchema;
 const testPerformanceRouter: express.Router = express.Router();
@@ -14,11 +15,13 @@ const controller: TestPerformanceController = new TestPerformanceController(serv
 
 testPerformanceRouter.post(
   "/create",
+  validateTokenHandler,
   celebrate(create),
   expressAsyncHandler(controller.addTestPerformance as RequestHandler)
 );
 testPerformanceRouter.put(
   "/update/:id",
+  validateTokenHandler,
   celebrate(updateTestPerformance),
   expressAsyncHandler(controller.updateTestPerformance as RequestHandler)
 );

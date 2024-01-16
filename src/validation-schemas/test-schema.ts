@@ -6,7 +6,7 @@ export const testSchema = {
     body: {
       name: Joi.string().required().messages({
         "string.base": "name should be string",
-        "any:required": "name is required",
+        "any.required": "name is required",
       }),
       technology_id: Joi.number()
         .integer()

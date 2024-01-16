@@ -7,7 +7,7 @@ import { Test } from "./test";
 class TestPerformance extends Model {
   id!: number;
   technology_id!: number;
-  start_time!: Date;
+  start_time?: Date;
   end_time?: Date;
   duration?: number;
   score?: number;
@@ -49,19 +49,15 @@ TestPerformance.init(
     },
     start_time: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
     end_time: {
       type: DataTypes.DATE,
-      // defaultValue: null,
     },
     duration: {
       type: DataTypes.INTEGER,
-      // defaultValue: 0,
     },
     score: {
       type: DataTypes.INTEGER,
-      // defaultValue: 0,
     },
   },
   {

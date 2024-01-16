@@ -11,10 +11,10 @@ const ThrowError = (errorType: HttpErrorType, message?: string): Promise<Error> 
 
 const IdValidationMessages = (key: string) => {
   return {
-    "string.base": `${key} should be number`,
-    "string.positive": `${key} must be positive integer`,
-    "string.integer": `${key} must be integer`,
-    "any:required": `${key} is required`,
+    "number.base": `${key} must be number`,
+    "number.positive": `${key} must be positive integer`,
+    "number.integer": `${key} must be integer`,
+    "any.required": `${key} is required`,
   };
 };
 

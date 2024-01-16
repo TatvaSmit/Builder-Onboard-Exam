@@ -3,11 +3,6 @@ enum UserRoles {
   Admin = "admin",
 }
 
-enum QuestionType {
-  mcq = "mcq",
-  subjective = "subjective",
-}
-
 enum HttpStatusCode {
   Created = 201,
   Ok = 200,
@@ -20,7 +15,10 @@ enum HttpStatusCode {
 }
 
 enum HttpErrorType {
+  UserDoesnotExist = "Email is not registered",
+  UserAlreadyRegistered = "User already registered with this email",
   BadRequest = "bad request",
+  ServerError = "Server Error",
   TokenNotAddedInRequest = "TokenNotAddedInRequest",
   UnauthorizedRole = "UnauthorizedRole",
   AuthHeaderIsNotAdded = "AuthHeaderIsNotAdded",
@@ -32,4 +30,4 @@ interface IErrorResponse {
   message: string;
 }
 
-export { UserRoles, QuestionType, HttpStatusCode, HttpErrorType, IErrorResponse };
+export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse };

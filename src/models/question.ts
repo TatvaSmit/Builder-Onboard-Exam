@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
-import { QuestionType } from "../../common/helper/enum";
 import { Technology } from "./technology";
 import { Test } from "./test";
 import { TestStats } from "./test_stats";
@@ -27,13 +26,9 @@ Question.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    question_type: {
-      type: DataTypes.ENUM(QuestionType.mcq, QuestionType.subjective),
-      allowNull: false,
-    },
     options: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     answer: {
       type: DataTypes.STRING,
@@ -50,7 +45,7 @@ Question.init(
   },
   { sequelize, modelName: "question", tableName: "question" }
 );
-// Question has relation with Technology 
+// Question has relation with Technology
 
 // Question.hasMany(TestStats, { foreignKey: "question_Id" });
 // TestStats.belongsTo(Question, { foreignKey: "question_Id" });

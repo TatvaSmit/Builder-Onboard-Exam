@@ -7,13 +7,13 @@ const testPerformanceBody = {
     .integer()
     .required()
     .messages(IdValidationMessages("technology_id")),
-  start_time: Joi.date().required().messages({
+  start_time: Joi.date().messages({
     "string.base": "start_time must be of type Date",
-    "any:required": "start_time is required",
+    "any.required": "start_time is required",
   }),
   end_time: Joi.date().messages({
     "string.base": "start_time must be of type Date",
-    "any:required": "start_time is required",
+    "any.required": "start_time is required",
   }),
   duration: Joi.number().integer().positive(),
   score: Joi.number().integer().positive(),
@@ -29,6 +29,32 @@ export const testPerformanceSchema = {
     params: {
       id: Joi.number().integer().positive().required(),
     },
-    body: testPerformanceBody,
+    body: {
+      technology_id: Joi.number()
+        .positive()
+        .integer()
+        .required()
+        .messages(IdValidationMessages("technology_id")),
+      user_id: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages(IdValidationMessages("user_id")),
+      test_id: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages(IdValidationMessages("test_id")),
+      duration: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages(IdValidationMessages("duration")),
+      score: Joi.number().integer().required().messages({
+        "number.base": "score must be of type number",
+        "number.integer": "score must be integer",
+        "any.required": "score is required",
+      }),
+    },
   },
 };

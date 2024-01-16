@@ -9,12 +9,12 @@ import expressAsyncHandler from "express-async-handler";
 require("dotenv").config();
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
   const errorResult = getErrorInfo(err);
-  return baseController.getErrorResult(res, HttpStatusCode.BadRequest, "errorResult");
+  return baseController.getErrorResult(res, errorResult.statusCode, errorResult.message);
 };
 
 const getErrorInfo = (error: Error) => {
+  console.log(error);
   const errorMessage = error.message;
   let errorResponse = {} as IErrorResponse;
   switch (errorMessage) {
@@ -34,7 +34,20 @@ const getErrorInfo = (error: Error) => {
       errorResponse.message = "authorization header is missing in the request";
       errorResponse.statusCode = HttpStatusCode.BadRequest;
       break;
+    case HttpErrorType.UserAlreadyRegistered:
+      errorResponse.message = "user with this email already exists";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.UserDoesnotExist:
+      errorResponse.message = "account associated with provided email doesnot exist";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    default:
+      HttpErrorType.ServerError;
+      errorResponse.message = "Internal Server Error";
+      errorResponse.statusCode = HttpStatusCode.ServerError;
   }
+  return errorResponse;
 };
 
 interface UserRequest extends Request {
@@ -49,13 +62,15 @@ const tokenVerifyRequestHandler = async (req: UserRequest, res: Response, next: 
     if (!token) {
       return ThrowError(HttpErrorType.TokenNotAddedInRequest);
     }
-    jwt.verify(token, SecreteKey, (err: jwt.VerifyErrors | null, decoded: any) => {
-      if (err) {
-        return ThrowError(HttpErrorType.TokenIsExpiredOrInvalid);
-      }
+    try {
+      let decoded: any = jwt.verify(token, SecreteKey);
       req.user = decoded.user;
       next();
-    });
+    } catch (error) {
+      if (error) {
+        return ThrowError(HttpErrorType.TokenIsExpiredOrInvalid);
+      }
+    }
   } else {
     return ThrowError(HttpErrorType.AuthHeaderIsNotAdded);
   }

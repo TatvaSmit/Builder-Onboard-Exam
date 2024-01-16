@@ -5,6 +5,7 @@ import { TestStatsController } from "../controllers/test-stats.controller";
 import { testStatsSchema } from "../validation-schemas/test-stats-schema";
 import { celebrate } from "celebrate";
 import expressAsyncHandler from "express-async-handler";
+import { validateTokenHandler } from "../../common/helper/middleware";
 
 const { create, updateTestStats } = testStatsSchema;
 const testStatsRouter = express.Router();
@@ -14,11 +15,13 @@ const controller: TestStatsController = new TestStatsController(service);
 
 testStatsRouter.post(
   "/create",
+  validateTokenHandler,
   celebrate(create),
   expressAsyncHandler(controller.addTestStats as RequestHandler)
 );
 testStatsRouter.put(
   "/update/:id",
+  validateTokenHandler,
   celebrate(updateTestStats),
   expressAsyncHandler(controller.updateStats as RequestHandler)
 );

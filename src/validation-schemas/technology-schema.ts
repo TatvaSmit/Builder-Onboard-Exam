@@ -7,7 +7,7 @@ export const technologySchema = {
         "string.base": "name should be string",
         "string.min": "name should have at lease 3 character",
         "string.max": "name should have at max 20 character",
-        "any:required": "name is required",
+        "any.required": "name is required",
       }),
     },
   },

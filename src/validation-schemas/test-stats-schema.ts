@@ -7,7 +7,7 @@ const testStatsBody = {
     .required()
     .messages({
       "string.base": "correct_answer must be string",
-      "any:required": "correct answer is required",
+      "any.required": "correct answer is required",
     }),
   is_skipped: Joi.boolean(),
   technology_id: Joi.number()

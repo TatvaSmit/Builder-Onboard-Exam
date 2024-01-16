@@ -5,21 +5,16 @@ const questionBody = {
   question: Joi.string().min(10).required().messages({
     "string.base": "question must be string",
     "string.min": "question should have at least length of 10 character",
-    "any:required": "question is required",
+    "any.required": "question is required",
   }),
-  options: Joi.string().min(3).messages({
+  options: Joi.string().min(3).required().messages({
     "string.base": "options must be of string",
     "string.min": "options should have at least length of 3 character",
-    "any:required": "options is required",
-  }),
-  question_type: Joi.string().min(3).required().messages({
-    "string.base": "question_type must be of string",
-    "string.min": "question_type should have at least length of 3 character",
-    "any:required": "question_type is required",
+    "any.required": "options is required",
   }),
   answer: Joi.string().required().messages({
     "string.base": "answer must be of string",
-    "any:required": "answer is required",
+    "any.required": "answer is required",
   }),
   technology_id: Joi.number()
     .positive()
