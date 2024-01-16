@@ -2,7 +2,7 @@ import { Request } from "express";
 import { TestPerformance } from "../models/test_performance";
 import { TestPerformanceRepository } from "../repository/test-performance.repository";
 import { TestStatsRepository } from "../repository/test-stats.repository";
-
+import _ from "lodash";
 export class TestPerformanceService {
   private readonly testStatsRepository: TestStatsRepository;
   public constructor(private readonly testPerformanceRepository: TestPerformanceRepository) {
@@ -23,14 +23,14 @@ export class TestPerformanceService {
     });
     let score = 0;
     const end_time = new Date();
-    const duration = Math.ceil((end_time.getTime() - new Date(start_time).getTime()) / (1000 * 60));
+    const duration = _.ceil((end_time.getTime() - new Date(start_time).getTime()) / (1000 * 60));
     if (testStats) {
-      testStats.forEach((element) => {
+      _.forEach(testStats, (element) => {
         if (!element.is_skipped) score += 1;
       });
     }
     return await this.testPerformanceRepository.updateTestPerformance(
-      { score: score, duration: duration, end_time: end_time, ...req.body },
+      { score, duration, end_time, ...req.body },
       Number(id)
     );
   };

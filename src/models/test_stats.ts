@@ -9,6 +9,7 @@ class TestStats extends Model {
   selected_answer?: string;
   correct_answer!: string;
   is_skipped?: boolean;
+  technology_id!: number;
   test_id!: number;
   user_id!: number;
   question_id!: number;
@@ -34,6 +35,14 @@ TestStats.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    technology_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      references: {
+        model: "technology",
+        key: "id",
+      },
     },
     test_id: {
       type: DataTypes.BIGINT,
@@ -65,5 +74,8 @@ TestStats.init(
     modelName: "test_stats",
   }
 );
+
+// This table shows question wise user input and its result,
+// It has question id, user id, test id, tech id
 
 export { TestStats };

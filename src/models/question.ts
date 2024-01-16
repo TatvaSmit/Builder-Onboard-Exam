@@ -50,6 +50,7 @@ Question.init(
   },
   { sequelize, modelName: "question", tableName: "question" }
 );
+// Question has relation with Technology 
 
 // Question.hasMany(TestStats, { foreignKey: "question_Id" });
 // TestStats.belongsTo(Question, { foreignKey: "question_Id" });

@@ -71,4 +71,6 @@ TestPerformance.init(
   }
 );
 
+// It is the table which will store test wise performance, start time, end time, score and duration
+// It has test id, user id, tech id
 export { TestPerformance };

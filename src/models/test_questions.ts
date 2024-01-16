@@ -42,6 +42,9 @@ TestQuestions.init(
   }
 );
 
+// This is junction table for questions and test, because differnt test can have same question
+// similarly, question can have more than one test related to them
+
 TestQuestions.belongsTo(Test, { foreignKey: "test_id" });
 TestQuestions.belongsTo(Question, { foreignKey: "question_id" });
 

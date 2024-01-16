@@ -13,4 +13,9 @@ export class UserController {
     const user = await this.userService.addUser(req.body);
     return baseController.getResult(res, HttpStatusCode.Ok, user);
   };
+
+  public loginUser = async (req: Request, res: Response): Promise<Response> => {
+    const token = await this.userService.loginUser(req.body);
+    return baseController.getResult(res, HttpStatusCode.Ok, token);
+  };
 }

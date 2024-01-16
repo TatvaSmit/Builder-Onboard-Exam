@@ -21,6 +21,15 @@ enum HttpStatusCode {
 
 enum HttpErrorType {
   BadRequest = "bad request",
+  TokenNotAddedInRequest = "TokenNotAddedInRequest",
+  UnauthorizedRole = "UnauthorizedRole",
+  AuthHeaderIsNotAdded = "AuthHeaderIsNotAdded",
+  TokenIsExpiredOrInvalid = "TokenIsExpiredOrInvalid",
 }
 
-export { UserRoles, QuestionType, HttpStatusCode, HttpErrorType };
+interface IErrorResponse {
+  statusCode: number;
+  message: string;
+}
+
+export { UserRoles, QuestionType, HttpStatusCode, HttpErrorType, IErrorResponse };

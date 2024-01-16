@@ -1,5 +1,5 @@
 import { Dialect } from "sequelize";
-require('dotenv').config();
+require("dotenv").config();
 
 interface DbConfig {
   host: string;
@@ -19,4 +19,6 @@ const DbConfiguration: DbConfig = {
   port: Number(process.env.DB_PORT || 3000),
 };
 
-export { DbConfiguration };
+const SecreteKey = process.env.SECRETE_KEY || "";
+
+export { DbConfiguration, SecreteKey };

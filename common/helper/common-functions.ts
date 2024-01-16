@@ -9,4 +9,13 @@ const ThrowError = (errorType: HttpErrorType, message?: string): Promise<Error> 
   return Promise.reject(error);
 };
 
-export { ThrowError };
+const IdValidationMessages = (key: string) => {
+  return {
+    "string.base": `${key} should be number`,
+    "string.positive": `${key} must be positive integer`,
+    "string.integer": `${key} must be integer`,
+    "any:required": `${key} is required`,
+  };
+};
+
+export { ThrowError, IdValidationMessages };
