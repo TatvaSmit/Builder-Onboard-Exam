@@ -5,9 +5,11 @@ import technologyRouter from "./technology-router";
 import testRouter from "./test-router";
 import testStatsRouter from "./test-stats-router";
 import testPerformanceRouter from "./test-performance-router";
+import { validateTokenHandler } from "../../common/helper/middleware";
 
 const mainRouter: express.Router = express.Router();
 mainRouter.use("/user", userRouter);
+mainRouter.use(validateTokenHandler);
 mainRouter.use("/question", questionRouter);
 mainRouter.use("/technology", technologyRouter);
 mainRouter.use("/test", testRouter);

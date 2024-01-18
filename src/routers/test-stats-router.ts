@@ -15,13 +15,11 @@ const controller: TestStatsController = new TestStatsController(service);
 
 testStatsRouter.post(
   "/create",
-  validateTokenHandler,
   celebrate(create),
   expressAsyncHandler(controller.addTestStats as RequestHandler)
 );
 testStatsRouter.put(
   "/update/:id",
-  validateTokenHandler,
   celebrate(updateTestStats),
   expressAsyncHandler(controller.updateStats as RequestHandler)
 );

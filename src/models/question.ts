@@ -1,9 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
-import { Technology } from "./technology";
-import { Test } from "./test";
-import { TestStats } from "./test_stats";
-import { TestQuestions } from "./test_questions";
 
 class Question extends Model {
   id!: number;

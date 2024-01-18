@@ -1,4 +1,3 @@
-import { WhereOptions } from "sequelize";
 import * as db from "../index";
 import { TestStats } from "../index";
 
@@ -21,6 +20,6 @@ export class TestStatsRepository {
   };
 
   public getTestStats = async (where: any): Promise<TestStats[]> => {
-    return await db.TestStats.findAll({...where});
+    return await db.TestStats.findAll({ ...where });
   };
 }

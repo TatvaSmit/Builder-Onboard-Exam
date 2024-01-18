@@ -3,6 +3,11 @@ enum UserRoles {
   Admin = "admin",
 }
 
+enum ExamStatus {
+  pending = "pending",
+  completed = "completed",
+}
+
 enum HttpStatusCode {
   Created = 201,
   Ok = 200,
@@ -23,6 +28,12 @@ enum HttpErrorType {
   UnauthorizedRole = "UnauthorizedRole",
   AuthHeaderIsNotAdded = "AuthHeaderIsNotAdded",
   TokenIsExpiredOrInvalid = "TokenIsExpiredOrInvalid",
+  ExamTimeUp = "ExamTimeUp",
+  NewPasswordCanTBeSameAsOld = "NewPasswordCanTBeSameAsOld",
+  TestStatsAlreadyExist = "TestStatsAlreadyExist",
+  TestQuestionsNotProvided = "TestQuestionsNotProvided",
+  OptionArrayIsNotFormatted = "OptionArrayIsNotFormatted",
+  AnswerShouldBeFromOptionProvided = "AnswerShouldBeFromOptionProvided",
 }
 
 interface IErrorResponse {
@@ -30,4 +41,4 @@ interface IErrorResponse {
   message: string;
 }
 
-export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse };
+export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse, ExamStatus };

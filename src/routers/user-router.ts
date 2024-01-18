@@ -6,13 +6,25 @@ import { celebrate } from "celebrate";
 import { userSchema } from "../validation-schemas/user-schema";
 import expressAsyncHandler from "express-async-handler";
 
-const { register, login } = userSchema;
+const { register, login, resetPassword } = userSchema;
 const userRouter: express.Router = express.Router();
 const repository: UserRepository = new UserRepository();
 const service: UserService = new UserService(repository);
 const controller: UserController = new UserController(service);
 
-userRouter.post("/create", celebrate(register), expressAsyncHandler(controller.registerUser as RequestHandler));
-userRouter.post("/login", celebrate(login), expressAsyncHandler(controller.loginUser as RequestHandler));
-
+userRouter.post(
+  "/create",
+  celebrate(register),
+  expressAsyncHandler(controller.registerUser as RequestHandler)
+);
+userRouter.post(
+  "/login",
+  celebrate(login),
+  expressAsyncHandler(controller.loginUser as RequestHandler)
+);
+userRouter.put(
+  "/reset-password",
+  celebrate(resetPassword),
+  expressAsyncHandler(controller.resetPassword as RequestHandler)
+);
 export default userRouter;

@@ -18,4 +18,9 @@ export class UserController {
     const token = await this.userService.loginUser(req.body);
     return baseController.getResult(res, HttpStatusCode.Ok, token);
   };
+
+  public resetPassword = async (req: Request, res: Response): Promise<Response> => {
+    const updateCount = await this.userService.resetPassword(req.body);
+    return baseController.getResult(res, HttpStatusCode.Ok, updateCount);
+  };
 }

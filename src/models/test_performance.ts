@@ -1,8 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
-import { User } from "./user";
-import { Technology } from "./technology";
-import { Test } from "./test";
+import { ExamSessions } from "./exam_sessions";
+import { ExamStatus } from "../../common/helper/enum";
 
 class TestPerformance extends Model {
   id!: number;
@@ -13,6 +12,7 @@ class TestPerformance extends Model {
   score?: number;
   user_id!: number;
   test_id!: number;
+  status!: string;
 }
 
 TestPerformance.init(
@@ -59,6 +59,11 @@ TestPerformance.init(
     score: {
       type: DataTypes.INTEGER,
     },
+    status: {
+      type: DataTypes.ENUM(ExamStatus.completed, ExamStatus.pending),
+      defaultValue: ExamStatus.pending,
+      allowNull: false,
+    },
   },
   {
     sequelize,
@@ -69,4 +74,5 @@ TestPerformance.init(
 
 // It is the table which will store test wise performance, start time, end time, score and duration
 // It has test id, user id, tech id
+TestPerformance.hasOne(ExamSessions, { foreignKey: "test_performance_id" });
 export { TestPerformance };

@@ -13,21 +13,15 @@ const respository: TestRepository = new TestRepository();
 const service: TestService = new TestService(respository);
 const controller: TestController = new TestController(service);
 
-testRouter.get(
-  "/getAll",
-  validateTokenHandler,
-  expressAsyncHandler(controller.getAllTest as RequestHandler)
-);
+testRouter.get("/getAll", expressAsyncHandler(controller.getAllTest as RequestHandler));
 testRouter.get(
   "/getTest/:id",
-  validateTokenHandler,
   celebrate(singleID),
   expressAsyncHandler(controller.getTest as RequestHandler)
 );
 testRouter.post(
   "/create",
-  validateTokenHandler,
-  validateTokenHandler,
+  validateAdminUser,
   celebrate(create),
   expressAsyncHandler(controller.addTest as RequestHandler)
 );

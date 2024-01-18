@@ -5,14 +5,14 @@ import mainRouter from "./src/routers/main-router";
 import bodyParser from "body-parser";
 import { errorHandler } from "./common/helper/middleware";
 import { errors } from "celebrate";
+import { scheduleJob } from "node-schedule";
 
 const app = express();
 app.use(bodyParser.json());
-
 app.use("/", mainRouter);
-
-app.use(errors())
+app.use(errors());
 app.use(errorHandler);
+
 sequelize
   .authenticate()
   .then(() => {
@@ -21,6 +21,7 @@ sequelize
       .sync({ force: false })
       .then(() => {
         console.log("Database synchronized with the latest formate.");
+        scheduleJob("0 * * * * *", () => console.log("test"));
       })
       .catch((err) => {
         console.error("Error synchronizing database:", err);

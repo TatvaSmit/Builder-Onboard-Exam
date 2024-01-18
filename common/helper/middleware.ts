@@ -14,7 +14,6 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
 };
 
 const getErrorInfo = (error: Error) => {
-  console.log(error);
   const errorMessage = error.message;
   let errorResponse = {} as IErrorResponse;
   switch (errorMessage) {
@@ -40,6 +39,30 @@ const getErrorInfo = (error: Error) => {
       break;
     case HttpErrorType.UserDoesnotExist:
       errorResponse.message = "account associated with provided email doesnot exist";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.ExamTimeUp:
+      errorResponse.message = "exam time has been expired, your exam has been already submitted";
+      errorResponse.statusCode = HttpStatusCode.Forbidden;
+      break;
+    case HttpErrorType.NewPasswordCanTBeSameAsOld:
+      errorResponse.message = "old password and new password can't be the same";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.TestStatsAlreadyExist:
+      errorResponse.message = "test stats is already exist";
+      errorResponse.statusCode = HttpStatusCode.Conflict;
+      break;
+    case HttpErrorType.TestQuestionsNotProvided:
+      errorResponse.message = "please provide questions array in the request body";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.OptionArrayIsNotFormatted:
+      errorResponse.message = "each options should be separated with | (pipe)";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.AnswerShouldBeFromOptionProvided:
+      errorResponse.message = "answer should match with the one of the provided options";
       errorResponse.statusCode = HttpStatusCode.BadRequest;
       break;
     default:

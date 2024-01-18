@@ -4,11 +4,25 @@ import { TestQuestions } from "../models/test_questions";
 
 export class TestRepository {
   public getAllTest = async (): Promise<Test[]> => {
-    return await db.Test.findAll({ include: db.Question });
+    return await db.Test.findAll({
+      attributes: ["id", ["name", "test_name"], "technology_id", "duration"],
+      include: {
+        model: db.Question,
+        attributes: ["id", "question", "options"],
+        through: { attributes: [] }, //This will prevent include junction table data
+      },
+    });
   };
 
   public getTest = async (test_id: number): Promise<Test | null> => {
-    return await db.Test.findByPk(test_id,{ include: { model: db.Question  } });
+    return await db.Test.findByPk(test_id, {
+      attributes: ["id", ["name", "test_name"], "technology_id", "duration"],
+      include: {
+        model: db.Question,
+        attributes: ["id", "question", "options"],
+        through: { attributes: [] }, //This will prevent include junction table data
+      },
+    });
   };
 
   public addTest = async (params: Test, questions: any): Promise<Test> => {

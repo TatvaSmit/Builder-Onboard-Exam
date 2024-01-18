@@ -15,12 +15,10 @@ const controller: TechnologyController = new TechnologyController(service);
 
 technologyRouter.get(
   "/getAll",
-  validateTokenHandler,
   expressAsyncHandler(controller.getAllTechnologies as RequestHandler)
 );
 technologyRouter.post(
   "/create",
-  validateTokenHandler,
   validateAdminUser,
   celebrate(create),
   expressAsyncHandler(controller.addNewTechnology as RequestHandler)

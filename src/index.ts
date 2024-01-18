@@ -5,5 +5,6 @@ import { Question } from "./models/question";
 import { TestPerformance } from "./models/test_performance";
 import { TestStats } from "./models/test_stats";
 import { Test } from "./models/test";
+import { ExamSessions } from "./models/exam_sessions";
 
-export { User, Technology, sequelize, TestPerformance, TestStats, Question, Test };
+export { User, Technology, sequelize, TestPerformance, TestStats, Question, Test, ExamSessions };

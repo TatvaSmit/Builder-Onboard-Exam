@@ -14,21 +14,17 @@ const service: QuestionService = new QuestionService(respository);
 const controller: QuestionController = new QuestionController(service);
 
 questionRouter.get(
-  "/getAll",
-  validateTokenHandler,
-  validateAdminUser,
-  expressAsyncHandler(controller.getAllQuestions as RequestHandler)
-);
-questionRouter.get(
   "/getQuestion/:id",
-  validateTokenHandler,
   celebrate(questionId),
   expressAsyncHandler(controller.getQuestion as RequestHandler)
 );
+questionRouter.use(validateAdminUser)
+questionRouter.get(
+  "/getAll",
+  expressAsyncHandler(controller.getAllQuestions as RequestHandler)
+);
 questionRouter.post(
   "/create",
-  validateTokenHandler,
-  validateAdminUser,
   celebrate(create),
   expressAsyncHandler(controller.createQuestion as RequestHandler)
 );

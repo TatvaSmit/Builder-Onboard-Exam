@@ -18,4 +18,12 @@ const IdValidationMessages = (key: string) => {
   };
 };
 
-export { ThrowError, IdValidationMessages };
+const convertToMilliseconds = (time: number) => {
+  return time * 60 * 1000;
+};
+
+const getTimeStamps = (time: Date) => {
+  return time.getTime();
+};
+
+export { ThrowError, IdValidationMessages, convertToMilliseconds, getTimeStamps };

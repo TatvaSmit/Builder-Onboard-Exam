@@ -1,10 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import { Question } from "../models/question";
 import { sequelize } from "../models/index";
-import { Technology } from "./technology";
 import { TestPerformance } from "./test_performance";
 import { TestStats } from "./test_stats";
-import { TestQuestions } from "./test_questions";
+import { ExamSessions } from "./exam_sessions";
 
 class Test extends Model {
   id!: number;
@@ -52,6 +51,7 @@ Test.init(
 
 Test.hasOne(TestPerformance, { foreignKey: "test_id" });
 Test.hasMany(TestStats, { foreignKey: "test_id" });
+Test.hasMany(ExamSessions, { foreignKey: "test_id" });
 Test.belongsToMany(Question, { through: "test_questions", foreignKey: "test_id" });
 Question.belongsToMany(Test, { through: "test_questions", foreignKey: "question_id" });
 TestStats.belongsTo(Test, { foreignKey: "test_id" });

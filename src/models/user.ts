@@ -3,6 +3,7 @@ import { sequelize } from "./index";
 import { UserRoles } from "../../common/helper/enum";
 import { TestPerformance } from "./test_performance";
 import { TestStats } from "./test_stats";
+import { ExamSessions } from "./exam_sessions";
 
 class User extends Model {
   id!: number;
@@ -50,6 +51,7 @@ User.init(
   }
 );
 
+User.hasMany(ExamSessions, { foreignKey: "user_id" });
 User.hasMany(TestPerformance, { foreignKey: "user_id" });
 User.hasMany(TestStats, { foreignKey: "user_id" });
 TestStats.belongsTo(User, { foreignKey: "user_id" });

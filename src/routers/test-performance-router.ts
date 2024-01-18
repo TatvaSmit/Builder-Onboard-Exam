@@ -15,13 +15,11 @@ const controller: TestPerformanceController = new TestPerformanceController(serv
 
 testPerformanceRouter.post(
   "/create",
-  validateTokenHandler,
   celebrate(create),
   expressAsyncHandler(controller.addTestPerformance as RequestHandler)
 );
 testPerformanceRouter.put(
   "/update/:id",
-  validateTokenHandler,
   celebrate(updateTestPerformance),
   expressAsyncHandler(controller.updateTestPerformance as RequestHandler)
 );

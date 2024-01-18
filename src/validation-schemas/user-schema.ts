@@ -41,4 +41,20 @@ export const userSchema = {
       }),
     },
   },
+  resetPassword: {
+    body: {
+      email: Joi.string().regex(EMAILREGEX).required().max(100).messages({
+        "string.pattern.base": "email is not valid",
+        "any.required": "email is required",
+      }),
+      password: Joi.string().regex(PASSWORDREGX).required().max(100).messages({
+        "string.pattern.base": "password is not valid",
+        "any.required": "password is required",
+      }),
+      newPassword: Joi.string().regex(PASSWORDREGX).required().max(100).messages({
+        "string.pattern.base": "new password is not valid",
+        "any.required": "new password is required",
+      }),
+    },
+  },
 };
