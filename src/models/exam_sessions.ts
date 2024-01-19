@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
-import { TestPerformance } from "./test_performance";
 
 class ExamSessions extends Model {
   id!: number;

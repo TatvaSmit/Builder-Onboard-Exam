@@ -5,7 +5,6 @@ import { TestStatsController } from "../controllers/test-stats.controller";
 import { testStatsSchema } from "../validation-schemas/test-stats-schema";
 import { celebrate } from "celebrate";
 import expressAsyncHandler from "express-async-handler";
-import { validateTokenHandler } from "../../common/helper/middleware";
 
 const { create, updateTestStats } = testStatsSchema;
 const testStatsRouter = express.Router();

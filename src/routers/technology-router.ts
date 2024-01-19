@@ -4,7 +4,7 @@ import { TechnologyService } from "../services/technology-service";
 import { TechnologyController } from "../controllers/technology.controller";
 import { celebrate } from "celebrate";
 import { technologySchema } from "../validation-schemas/technology-schema";
-import { validateAdminUser, validateTokenHandler } from "../../common/helper/middleware";
+import { validateAdminUser } from "../../common/helper/middleware";
 import expressAsyncHandler from "express-async-handler";
 
 const { create } = technologySchema;

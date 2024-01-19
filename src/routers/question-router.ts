@@ -5,7 +5,7 @@ import { QuestionController } from "../controllers/question.controller";
 import { questionSchema } from "../validation-schemas/question-schema";
 import { celebrate } from "celebrate";
 import expressAsyncHandler from "express-async-handler";
-import { validateAdminUser, validateTokenHandler } from "../../common/helper/middleware";
+import { validateAdminUser } from "../../common/helper/middleware";
 
 const { create, questionId, updateQuestion } = questionSchema;
 const questionRouter: express.Router = express.Router();
@@ -33,10 +33,10 @@ questionRouter.put(
   celebrate(updateQuestion),
   expressAsyncHandler(controller.updateQuestion as RequestHandler)
 );
-questionRouter.delete(
-  "/delete/:id",
-  celebrate(updateQuestion),
-  expressAsyncHandler(controller.deleteQuestion as RequestHandler)
-);
+// questionRouter.delete(
+//   "/delete/:id",
+//   celebrate(questionId),
+//   expressAsyncHandler(controller.deleteQuestion as RequestHandler)
+// );
 
 export default questionRouter;

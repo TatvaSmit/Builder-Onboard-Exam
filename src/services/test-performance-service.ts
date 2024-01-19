@@ -32,15 +32,11 @@ export class TestPerformanceService {
       const where = { id: testPerformanceId } as WhereOptions;
       const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
       if (testPerformance) {
-        const startTime = _.get(testPerformance, "start_time", "");
-        const duration = _.get(testPerformance, "duration", 0);
-        const endTime = _.get(testPerformance, "end_time", "");
-        const formattedStartTime = new Date(startTime);
-        const formattedEndTime = new Date(endTime);
-        if (
-          getTimeStamps(formattedEndTime) >=
-          getTimeStamps(formattedStartTime) + convertToMilliseconds(duration)
-        ) {
+        const isExamPending = _.isEqual(
+          _.get(testPerformance, "status", ExamStatus.pending),
+          ExamStatus.pending
+        );
+        if (!isExamPending) {
           return ThrowError(HttpErrorType.ExamTimeUp);
         }
       } else {
@@ -68,12 +64,16 @@ export class TestPerformanceService {
   public updateTestPerformance = async (req: Request): Promise<[number] | Error> => {
     const { id } = req.params;
     const { user_id, test_id, status } = req.body;
-    if (!_.eq(status, ExamStatus.completed)) {
+    if (!_.isEqual(status, ExamStatus.completed)) {
       const testStats = await this.testStatsRepository.getTestStats({
         where: { user_id: Number(user_id), test_id: Number(test_id) },
       });
       const where = { id } as WhereOptions;
       const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
+      const examSession = await ExamSessions.findOne({ where: { test_performance_id: id } });
+      if (examSession) {
+        await ExamSessions.destroy({ where: { test_performance_id: id } });
+      }
       const start_time = _.get(testPerformance, "start_time", new Date());
       let score = 0;
       const end_time = new Date();
@@ -83,7 +83,7 @@ export class TestPerformanceService {
       if (testStats) {
         _.forEach(testStats, (element: TestStats) => {
           const { selected_answer, correct_answer } = element;
-          if (selected_answer === correct_answer) {
+          if (_.isEqual(selected_answer, correct_answer)) {
             score += 1;
           }
         });

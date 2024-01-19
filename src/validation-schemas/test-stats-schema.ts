@@ -2,9 +2,7 @@ import Joi from "joi";
 import { IdValidationMessages } from "../../common/helper/common-functions";
 
 const testStatsBody = {
-  selected_answer: Joi.string(),
-  correct_answer: Joi.string(),
-  is_skipped: Joi.boolean(),
+  selected_answer: Joi.string().required().messages({ "any.required": "selected_answer is required" }),
   technology_id: Joi.number()
     .positive()
     .integer()

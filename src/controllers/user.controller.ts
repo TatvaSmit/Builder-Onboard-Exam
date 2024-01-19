@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { User } from "../models/user";
 import { UserService } from "../services/user-service";
 import { baseController } from "../../common/helper/base.controller";
 import { HttpStatusCode } from "../../common/helper/enum";

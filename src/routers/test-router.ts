@@ -5,7 +5,7 @@ import { TestController } from "../controllers/test.controller";
 import { testSchema } from "../validation-schemas/test-schema";
 import { celebrate } from "celebrate";
 import expressAsyncHandler from "express-async-handler";
-import { validateAdminUser, validateTokenHandler } from "../../common/helper/middleware";
+import { validateAdminUser } from "../../common/helper/middleware";
 
 const { create, singleID } = testSchema;
 const testRouter: express.Router = express.Router();

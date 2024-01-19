@@ -6,7 +6,6 @@ import { SecreteKey } from "../config/app-config";
 import { User } from "../../src";
 import { ThrowError } from "./common-functions";
 import expressAsyncHandler from "express-async-handler";
-require("dotenv").config();
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   const errorResult = getErrorInfo(err);
@@ -14,7 +13,7 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
 };
 
 const getErrorInfo = (error: Error) => {
-  console.log(error)
+  console.log("UNCAUGHT ERROR ===========", error);
   const errorMessage = error.message;
   let errorResponse = {} as IErrorResponse;
   switch (errorMessage) {
@@ -24,7 +23,7 @@ const getErrorInfo = (error: Error) => {
       break;
     case HttpErrorType.TokenNotAddedInRequest:
       errorResponse.message = "token is required";
-      errorResponse.statusCode = HttpStatusCode.Unauthorized;
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
       break;
     case HttpErrorType.TokenIsExpiredOrInvalid:
       errorResponse.message = "token is either expired or invalid";
@@ -91,9 +90,7 @@ const tokenVerifyRequestHandler = async (req: UserRequest, res: Response, next: 
       req.user = decoded.user;
       next();
     } catch (error) {
-      if (error) {
-        return ThrowError(HttpErrorType.TokenIsExpiredOrInvalid);
-      }
+      return ThrowError(HttpErrorType.TokenIsExpiredOrInvalid);
     }
   } else {
     return ThrowError(HttpErrorType.AuthHeaderIsNotAdded);

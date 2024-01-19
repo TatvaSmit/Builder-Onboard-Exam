@@ -20,7 +20,7 @@ const autoSubmit = async () => {
     const elapsedTime = _.subtract(currentTimeStamp, startTimeStamp);
     if (elapsedTime >= durationTimeStamp) {
       const testPerformance = await TestPerformance.findByPk(test_performance_id);
-      const isExamPending = _.eq(
+      const isExamPending = _.isEqual(
         _.get(testPerformance, "status", ExamStatus.pending),
         ExamStatus.pending
       );
@@ -32,7 +32,7 @@ const autoSubmit = async () => {
         if (testStats) {
           _.forEach(testStats, (testStat: TestStats) => {
             const { selected_answer, correct_answer } = testStat;
-            if (_.eq(selected_answer, correct_answer)) {
+            if (_.isEqual(selected_answer, correct_answer)) {
               score += 1;
             }
           });

@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
-import { ExamSessions } from "./exam_sessions";
 import { ExamStatus } from "../../common/helper/enum";
 
 class TestPerformance extends Model {

@@ -26,7 +26,7 @@ TestStats.init(
     },
     correct_answer: {
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull: false,
     },
     is_skipped: {
       type: DataTypes.BOOLEAN,
@@ -69,6 +69,7 @@ TestStats.init(
   {
     sequelize,
     modelName: "test_stats",
+    tableName: "test_stats",
   }
 );
 

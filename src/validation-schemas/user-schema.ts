@@ -24,7 +24,8 @@ export const userSchema = {
         "any.required": "email is required",
       }),
       password: Joi.string().regex(PASSWORDREGX).required().max(100).messages({
-        "string.pattern.base": "password is not valid",
+        "string.pattern.base":
+          "password should have at least 1 lowercase, 1 uppercase letter, 1 digit, 1 special character and length of 8",
         "any.required": "password is required",
       }),
     },
@@ -48,11 +49,13 @@ export const userSchema = {
         "any.required": "email is required",
       }),
       password: Joi.string().regex(PASSWORDREGX).required().max(100).messages({
-        "string.pattern.base": "password is not valid",
+        "string.pattern.base":
+          "password should have at least 1 lowercase, 1 uppercase letter, 1 digit, 1 special character and length of 8",
         "any.required": "password is required",
       }),
       newPassword: Joi.string().regex(PASSWORDREGX).required().max(100).messages({
-        "string.pattern.base": "new password is not valid",
+        "string.pattern.base":
+          "new password should have at least 1 lowercase, 1 uppercase letter, 1 digit, 1 special character and length of 8",
         "any.required": "new password is required",
       }),
     },
