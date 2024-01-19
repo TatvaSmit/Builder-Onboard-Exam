@@ -4,6 +4,7 @@ import { QuestionRepository } from "../repository/question.respository";
 import _ from "lodash";
 import { ThrowError } from "../../common/helper/common-functions";
 import { HttpErrorType } from "../../common/helper/enum";
+import { WhereOptions } from "sequelize";
 
 export class QuestionService {
   public constructor(private readonly questionRepository: QuestionRepository) {
@@ -16,7 +17,8 @@ export class QuestionService {
 
   public getQuestion = async (req: Request): Promise<Question | null> => {
     const { id } = req.params;
-    return await this.questionRepository.getQuestion(Number(id));
+    const where = { id } as WhereOptions;
+    return await this.questionRepository.getQuestion(where);
   };
 
   public createQuestion = async (questionData: Question): Promise<Question | Error> => {

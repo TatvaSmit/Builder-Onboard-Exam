@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import { errorHandler } from "./common/helper/middleware";
 import { errors } from "celebrate";
 import { scheduleJob } from "node-schedule";
+import autoSubmit from "./src/auto-submit";
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,7 +22,7 @@ sequelize
       .sync({ force: false })
       .then(() => {
         console.log("Database synchronized with the latest formate.");
-        scheduleJob("0 * * * * *", () => console.log("test"));
+        scheduleJob("0 * * * * *", autoSubmit);
       })
       .catch((err) => {
         console.error("Error synchronizing database:", err);

@@ -5,7 +5,6 @@ class Question extends Model {
   id!: number;
   question!: string;
   options?: string;
-  question_type!: string;
   answer!: string;
   technology_id!: number;
 }

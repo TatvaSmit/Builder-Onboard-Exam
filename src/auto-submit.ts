@@ -6,6 +6,7 @@ import { ExamStatus } from "../common/helper/enum";
 import { convertToMilliseconds, getTimeStamps } from "../common/helper/common-functions";
 
 const autoSubmit = async () => {
+  console.log("****************** scheduler is running ******************");
   const currentTimeStamp = new Date().getTime();
   const examSessions = await ExamSessions.findAll();
   if (_.isEmpty(examSessions)) {
@@ -35,9 +36,20 @@ const autoSubmit = async () => {
               score += 1;
             }
           });
-          _.assign(testPerformance, { score: score, status: ExamStatus.completed });
         }
-        await TestPerformance.update(testPerformance, { where: { id: test_performance_id } });
+        let testPerformanceParams = {} as TestPerformance;
+        _.assign(testPerformanceParams, {
+          score: score,
+          status: ExamStatus.completed,
+          start_time: start_time,
+          duration: duration,
+          end_time: new Date(),
+          user_id: user_id,
+          test_id: test_id,
+        });
+        await TestPerformance.update(testPerformanceParams, {
+          where: { id: test_performance_id },
+        });
       }
       await ExamSessions.destroy({ where: { id } });
     }

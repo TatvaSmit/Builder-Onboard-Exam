@@ -3,12 +3,7 @@ import { IdValidationMessages } from "../../common/helper/common-functions";
 
 const testStatsBody = {
   selected_answer: Joi.string(),
-  correct_answer: Joi.string()
-    .required()
-    .messages({
-      "string.base": "correct_answer must be string",
-      "any.required": "correct answer is required",
-    }),
+  correct_answer: Joi.string(),
   is_skipped: Joi.boolean(),
   technology_id: Joi.number()
     .positive()

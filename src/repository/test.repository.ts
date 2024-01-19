@@ -20,7 +20,7 @@ export class TestRepository {
       include: {
         model: db.Question,
         attributes: ["id", "question", "options"],
-        through: { attributes: [] }, //This will prevent include junction table data
+        through: { attributes: [] },
       },
     });
   };

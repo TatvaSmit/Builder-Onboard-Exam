@@ -74,5 +74,4 @@ TestPerformance.init(
 
 // It is the table which will store test wise performance, start time, end time, score and duration
 // It has test id, user id, tech id
-TestPerformance.hasOne(ExamSessions, { foreignKey: "test_performance_id" });
 export { TestPerformance };

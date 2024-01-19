@@ -4,7 +4,7 @@ import { sequelize } from "./index";
 class TestStats extends Model {
   id!: number;
   selected_answer?: string;
-  correct_answer!: string;
+  correct_answer?: string;
   is_skipped?: boolean;
   technology_id!: number;
   test_id!: number;
@@ -26,7 +26,7 @@ TestStats.init(
     },
     correct_answer: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull:false
     },
     is_skipped: {
       type: DataTypes.BOOLEAN,

@@ -45,16 +45,6 @@ export const testPerformanceSchema = {
         .positive()
         .required()
         .messages(IdValidationMessages("test_id")),
-      duration: Joi.number()
-        .integer()
-        .positive()
-        .required()
-        .messages(IdValidationMessages("duration")),
-      score: Joi.number().integer().required().messages({
-        "number.base": "score must be of type number",
-        "number.integer": "score must be integer",
-        "any.required": "score is required",
-      }),
     },
   },
 };

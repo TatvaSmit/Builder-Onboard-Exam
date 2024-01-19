@@ -11,27 +11,26 @@ import {
 } from "../../common/helper/common-functions";
 import { ExamStatus, HttpErrorType } from "../../common/helper/enum";
 import { ExamSessions } from "../models/exam_sessions";
+import { TestRepository } from "../repository/test.repository";
+import { WhereOptions } from "sequelize";
 
 export class TestPerformanceService {
   private readonly testStatsRepository: TestStatsRepository;
+  private readonly testRepository: TestRepository;
   public constructor(private readonly testPerformanceRepository: TestPerformanceRepository) {
     this.testPerformanceRepository = this.testPerformanceRepository;
     this.testStatsRepository = new TestStatsRepository();
+    this.testRepository = new TestRepository();
   }
 
   public addTestPerformance = async (
-    testData: TestPerformance
+    testPerformanceData: TestPerformance
   ): Promise<TestPerformance | Error> => {
     // Handled case where user tries to re-attempt the test or some how logged out so re starting the test
-    const testPerformanceId = _.get(testData, "id", null);
+    const testPerformanceId = _.get(testPerformanceData, "id", null);
     if (testPerformanceId) {
-      const testPerformance = await this.testPerformanceRepository.getTestPerformance({
-        where: { id: testPerformanceId },
-      });
-      const isExamPending = _.eq(
-        _.get(testPerformance, "status", ExamStatus.pending),
-        ExamStatus.pending
-      );
+      const where = { id: testPerformanceId } as WhereOptions;
+      const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
       if (testPerformance) {
         const startTime = _.get(testPerformance, "start_time", "");
         const duration = _.get(testPerformance, "duration", 0);
@@ -48,24 +47,34 @@ export class TestPerformanceService {
         return ThrowError(HttpErrorType.ServerError);
       }
     }
-    const params = { ...testData, start_time: new Date() };
-    const test_id = _.get(testData, "id", 0);
-    const user_id = _.get(testData, "user_id", 0);
+    const params = { ...testPerformanceData, start_time: new Date() };
+    const test_id = _.get(testPerformanceData, "test_id", 0);
+    const testData = await this.testRepository.getTest(test_id);
+    const user_id = _.get(testPerformanceData, "user_id", 0);
     const start_time = _.get(params, "start_time", new Date());
     const duration = _.get(testData, "duration", 0);
-    const testPerformance = await this.testPerformanceRepository.addTestPerformance(params as any);
-    const test_performance_id = _.get(testData, "id", 0);
+    let testPerformance = await this.testPerformanceRepository.addTestPerformance(params as any);
+    const test_performance_id = _.get(testPerformance, "id", 0);
     await ExamSessions.create({ user_id, test_id, start_time, duration, test_performance_id });
-    return testPerformance;
+    const formattedResponse = _.omit(testPerformance.dataValues, [
+      "score",
+      "duration",
+      "start_time",
+      "end_time",
+    ]) as TestPerformance;
+    return formattedResponse;
   };
 
   public updateTestPerformance = async (req: Request): Promise<[number] | Error> => {
     const { id } = req.params;
-    const { user_id, test_id, start_time, status } = req.body;
+    const { user_id, test_id, status } = req.body;
     if (!_.eq(status, ExamStatus.completed)) {
       const testStats = await this.testStatsRepository.getTestStats({
         where: { user_id: Number(user_id), test_id: Number(test_id) },
       });
+      const where = { id } as WhereOptions;
+      const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
+      const start_time = _.get(testPerformance, "start_time", new Date());
       let score = 0;
       const end_time = new Date();
       const duration = _.ceil(

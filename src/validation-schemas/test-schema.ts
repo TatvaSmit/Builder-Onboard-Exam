@@ -18,7 +18,6 @@ export const testSchema = {
         .positive()
         .required()
         .messages(IdValidationMessages("duration")),
-      score: Joi.number().integer().positive().required().messages(IdValidationMessages("score")),
       questions: Joi.array().items(
         Joi.object({
           id: Joi.number().integer().positive().required().messages(IdValidationMessages("id")),

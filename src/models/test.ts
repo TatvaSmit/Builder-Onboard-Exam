@@ -10,7 +10,7 @@ class Test extends Model {
   name!: string;
   technology_id!: number;
   duration!: number;
-  score!: number;
+  score?: number;
 }
 
 Test.init(
@@ -39,7 +39,7 @@ Test.init(
     },
     score: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

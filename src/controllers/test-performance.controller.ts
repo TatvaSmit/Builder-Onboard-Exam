@@ -9,8 +9,8 @@ export class TestPerformanceController {
   }
 
   public addTestPerformance = async (req: Request, res: Response): Promise<Response> => {
-    const test = this.testPerformanceService.addTestPerformance(req.body);
-    return baseController.getResult(res, HttpStatusCode.Created, test);
+    const testPerformance = await this.testPerformanceService.addTestPerformance(req.body);
+    return baseController.getResult(res, HttpStatusCode.Created, testPerformance);
   };
 
   public updateTestPerformance = async (req: Request, res: Response) => {

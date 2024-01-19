@@ -20,11 +20,12 @@ export class TestService {
   };
 
   public addTest = async (params: Test | any): Promise<Test | Error> => {
-    const { name, technology_id, duration, score }: Test = params;
+    const { name, technology_id, duration }: Test = params;
     const questions = _.get(params, "questions", []);
     if (_.isEmpty(questions)) {
       return ThrowError(HttpErrorType.TestQuestionsNotProvided);
     }
+    const score = questions.length;
     return await this.testRepository.addTest(
       { name, technology_id, duration, score } as Test,
       questions

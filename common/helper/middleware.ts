@@ -14,6 +14,7 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
 };
 
 const getErrorInfo = (error: Error) => {
+  console.log(error)
   const errorMessage = error.message;
   let errorResponse = {} as IErrorResponse;
   switch (errorMessage) {
