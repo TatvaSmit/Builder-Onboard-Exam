@@ -22,20 +22,11 @@ export class QuestionService {
   };
 
   public createQuestion = async (questionData: Question): Promise<Question | Error> => {
-    const options = _.get(questionData, "options", "");
+    const options = _.get(questionData, "options", []);
     const answer = _.trim(_.get(questionData, "answer", ""));
-    if (!_.includes(options, "|")) {
-      return ThrowError(HttpErrorType.OptionArrayIsNotFormatted);
-    }
-    // removing the extra spaces added by user in option string
-    const formatedOptionString = _.map(_.split(options, "|"), _.trim).join("|");
-    const optionArray = _.split(formatedOptionString, "|");
-    const isAnswerInTheArray = _.includes(optionArray, answer);
+    const isAnswerInTheArray = _.some(options, { name: answer });
     if (!isAnswerInTheArray) {
       return ThrowError(HttpErrorType.AnswerShouldBeFromOptionProvided);
-    } else {
-      // setting formatted data
-      _.assign(questionData, { options: formatedOptionString, answer: answer });
     }
     return await this.questionRepository.addQuestion(questionData);
   };

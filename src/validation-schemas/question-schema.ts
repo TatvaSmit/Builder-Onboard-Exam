@@ -7,11 +7,11 @@ const questionBody = {
     "string.min": "question should have at least length of 10 character",
     "any.required": "question is required",
   }),
-  options: Joi.string().min(3).required().messages({
-    "string.base": "options must be of string",
-    "string.min": "options should have at least length of 3 character",
-    "any.required": "options is required",
-  }),
+  options: Joi.array().items(
+    Joi.object({
+      name: Joi.string().required(),
+    })
+  ),
   answer: Joi.string().required().messages({
     "string.base": "answer must be of string",
     "any.required": "answer is required",

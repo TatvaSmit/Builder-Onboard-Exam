@@ -41,4 +41,8 @@ interface IErrorResponse {
   message: string;
 }
 
-export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse, ExamStatus };
+interface IOptions {
+  name: string;
+}
+
+export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse, ExamStatus, IOptions };

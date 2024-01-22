@@ -1,10 +1,11 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
+import { IOptions } from "../../common/helper/enum";
 
 class Question extends Model {
   id!: number;
   question!: string;
-  options?: string;
+  options!: Array<IOptions>;
   answer!: string;
   technology_id!: number;
 }
@@ -22,8 +23,11 @@ Question.init(
       allowNull: false,
     },
     options: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.JSON,
+      get() {
+        const optionsString = this.getDataValue("options");
+        return optionsString ? JSON.parse(optionsString) : [];
+      },
     },
     answer: {
       type: DataTypes.STRING,
