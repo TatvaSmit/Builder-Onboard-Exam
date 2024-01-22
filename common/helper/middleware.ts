@@ -108,5 +108,4 @@ const roleAuthorizationHandle = async (req: UserRequest, res: Response, next: Ne
 
 const validateTokenHandler = expressAsyncHandler(tokenVerifyRequestHandler as RequestHandler);
 const validateAdminUser = expressAsyncHandler(roleAuthorizationHandle as RequestHandler);
-
 export { errorHandler, validateTokenHandler, validateAdminUser };
