@@ -13,14 +13,17 @@ import { ExamStatus, HttpErrorType } from "../../common/helper/enum";
 import { ExamSessions } from "../models/exam_sessions";
 import { TestRepository } from "../repository/test.repository";
 import { WhereOptions } from "sequelize";
+import { QuestionRepository } from "../repository/question.respository";
 
 export class TestPerformanceService {
   private readonly testStatsRepository: TestStatsRepository;
   private readonly testRepository: TestRepository;
+  private readonly questionRepository: QuestionRepository;
   public constructor(private readonly testPerformanceRepository: TestPerformanceRepository) {
     this.testPerformanceRepository = this.testPerformanceRepository;
     this.testStatsRepository = new TestStatsRepository();
     this.testRepository = new TestRepository();
+    this.questionRepository = new QuestionRepository();
   }
 
   public addTestPerformance = async (
@@ -81,10 +84,14 @@ export class TestPerformanceService {
         (getTimeStamps(end_time) - getTimeStamps(new Date(start_time))) / (1000 * 60)
       );
       if (testStats) {
-        _.forEach(testStats, (element: TestStats) => {
+        _.forEach(testStats, async (element: TestStats) => {
+          const question = await this.questionRepository.getQuestion({
+            where: { id: _.get(element, "question_id", "") },
+          });
+          if (!question) return;
           const { selected_answer, correct_answer } = element;
           if (_.isEqual(selected_answer, correct_answer)) {
-            score += 1;
+            score += _.get(question, "points", 0);
           }
         });
       }

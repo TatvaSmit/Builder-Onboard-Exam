@@ -4,6 +4,7 @@ import { TestPerformance } from "./models/test_performance";
 import { TestStats } from "./models/test_stats";
 import { ExamStatus } from "../common/helper/enum";
 import { convertToMilliseconds, getTimeStamps } from "../common/helper/common-functions";
+import { Question } from "./models/question";
 
 const autoSubmit = async () => {
   console.log("****************** scheduler is running ******************");
@@ -30,10 +31,14 @@ const autoSubmit = async () => {
         });
         let score = 0;
         if (testStats) {
-          _.forEach(testStats, (testStat: TestStats) => {
+          _.forEach(testStats, async (testStat: TestStats) => {
+            const question = await Question.findOne({
+              where: { id: _.get(testStat, "question_id", "") },
+            });
+            if (!question) return;
             const { selected_answer, correct_answer } = testStat;
             if (_.isEqual(selected_answer, correct_answer)) {
-              score += 1;
+              score += _.get(question, "points", 0);
             }
           });
         }

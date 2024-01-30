@@ -7,6 +7,7 @@ class Question extends Model {
   question!: string;
   options!: Array<IOptions>;
   answer!: string;
+  points!: number;
   technology_id!: number;
 }
 
@@ -28,6 +29,11 @@ Question.init(
         const optionsString = this.getDataValue("options");
         return optionsString ? JSON.parse(optionsString) : [];
       },
+    },
+    points: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
     },
     answer: {
       type: DataTypes.STRING,
