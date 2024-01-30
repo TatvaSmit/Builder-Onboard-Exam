@@ -12,6 +12,10 @@ const questionBody = {
       name: Joi.string().required(),
     })
   ),
+  points: Joi.number().integer().positive().required().messages({
+    "string.base": "points must be positive interger",
+    "any.required": "points is required",
+  }),
   answer: Joi.string().required().messages({
     "string.base": "answer must be of string",
     "any.required": "answer is required",
