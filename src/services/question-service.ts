@@ -11,14 +11,26 @@ export class QuestionService {
     this.questionRepository = questionRepository;
   }
 
-  public getAllQuestions = async (): Promise<Question[]> => {
-    return await this.questionRepository.getAllQuestions();
+  public getAllQuestions = async (req: Request): Promise<Question[]> => {
+    const { technology_id } = req.query;
+    const where = { technology_id: Number(technology_id) } as WhereOptions;
+    if (Number(technology_id) !== 0) {
+      return  await this.questionRepository.getAllQuestions(where);
+    } else {
+      return await this.questionRepository.getAllQuestions();
+    }
   };
 
   public getQuestion = async (req: Request): Promise<Question | null> => {
     const { id } = req.params;
     const where = { id } as WhereOptions;
     return await this.questionRepository.getQuestion(where);
+  };
+
+  public getFullQuestion = async (req: Request): Promise<Question | null> => {
+    const { id } = req.params;
+    const where = { id } as WhereOptions;
+    return await this.questionRepository.getFullQuestion(where);
   };
 
   public createQuestion = async (questionData: Question): Promise<Question | Error> => {

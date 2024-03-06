@@ -1,12 +1,10 @@
-import { WhereOptions } from "sequelize";
+import { WhereOptions, where } from "sequelize";
 import * as db from "../index";
 import { Question } from "../index";
 
 export class QuestionRepository {
-  public getAllQuestions = async (): Promise<Question[]> => {
-    return await db.Question.findAll({
-      attributes: ["id", "question", "options", "technology_id"],
-    });
+  public getAllQuestions = async (where?: WhereOptions): Promise<Question[]> => {
+    return await db.Question.findAll({ where, raw: true });
   };
 
   public getQuestion = async (where: WhereOptions): Promise<Question | null> => {
@@ -14,6 +12,10 @@ export class QuestionRepository {
       where,
       attributes: ["id", "question", "options", "technology_id"],
     });
+  };
+
+  public getFullQuestion = async (where: WhereOptions): Promise<Question | null> => {
+    return await db.Question.findOne({ where, raw: true });
   };
 
   public addQuestion = async (params: Question): Promise<Question> => {

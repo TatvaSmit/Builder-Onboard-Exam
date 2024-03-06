@@ -42,7 +42,7 @@ export class TestStatsService {
       }
     }
     const testStatsResponse = await this.testStatsRepository.addTestStats(testStatsData);
-    const formattedTestStatsResponse = _.omit(testStatsResponse.dataValues, [
+    const formattedTestStatsResponse = _.omit(testStatsResponse.toJSON(), [
       "is_skipped",
       "correct_answer",
     ]) as TestStats;

@@ -6,6 +6,8 @@ import { TestPerformance } from "./test_performance";
 class Technology extends Model {
   id!: number;
   name!: string;
+  duration!: string;
+  no_of_questions!: string;
 }
 
 Technology.init(
@@ -19,6 +21,16 @@ Technology.init(
     name: {
       allowNull: false,
       type: DataTypes.STRING,
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 30,
+    },
+    no_of_questions: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 30,
     },
   },
   { sequelize, modelName: "technology", tableName: "technology" }

@@ -1,3 +1,6 @@
+import { Request } from "express";
+import { User } from "../../src";
+
 enum UserRoles {
   Developer = "developer",
   Admin = "admin",
@@ -17,6 +20,7 @@ enum HttpStatusCode {
   Forbidden = 403,
   Unauthorized = 401,
   ServerError = 500,
+  DuplicateEntry = 409,
 }
 
 enum HttpErrorType {
@@ -24,16 +28,18 @@ enum HttpErrorType {
   UserAlreadyRegistered = "User already registered with this email",
   BadRequest = "bad request",
   ServerError = "Server Error",
-  TokenNotAddedInRequest = "TokenNotAddedInRequest",
-  UnauthorizedRole = "UnauthorizedRole",
-  AuthHeaderIsNotAdded = "AuthHeaderIsNotAdded",
-  TokenIsExpiredOrInvalid = "TokenIsExpiredOrInvalid",
-  ExamTimeUp = "ExamTimeUp",
-  NewPasswordCanTBeSameAsOld = "NewPasswordCanTBeSameAsOld",
-  TestStatsAlreadyExist = "TestStatsAlreadyExist",
-  TestQuestionsNotProvided = "TestQuestionsNotProvided",
-  OptionArrayIsNotFormatted = "OptionArrayIsNotFormatted",
-  AnswerShouldBeFromOptionProvided = "AnswerShouldBeFromOptionProvided",
+  TokenNotAddedInRequest = "Token Not Added In Request",
+  UnauthorizedRole = "Unauthorized Role",
+  AuthHeaderIsNotAdded = "AuthHeader Is Not Added",
+  TokenIsExpiredOrInvalid = "Token Is Expired Or Invalid",
+  ExamTimeUp = "Exam Time Up",
+  NewPasswordCanTBeSameAsOld = "NewPassword Can'T Be Same As Old",
+  TestStatsAlreadyExist = "TestStats Already Exist",
+  TestQuestionsNotProvided = "Test Questions Not Provided",
+  OptionArrayIsNotFormatted = "Option Array Is Not Formatted",
+  AnswerShouldBeFromOptionProvided = "Answer Should Be From Option Provided",
+  PasswordIncorrect = "Password is incorrect",
+  DuplicateTechnologyName = "Entered Technology Already Exists",
 }
 
 interface IErrorResponse {
@@ -45,4 +51,16 @@ interface IOptions {
   name: string;
 }
 
-export { UserRoles, HttpStatusCode, HttpErrorType, IErrorResponse, ExamStatus, IOptions };
+interface UserRequest extends Request {
+  user?: User;
+}
+
+export {
+  UserRoles,
+  HttpStatusCode,
+  HttpErrorType,
+  IErrorResponse,
+  ExamStatus,
+  IOptions,
+  UserRequest,
+};

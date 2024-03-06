@@ -18,6 +18,11 @@ export class UserController {
     return baseController.getResult(res, HttpStatusCode.Ok, token);
   };
 
+  public getUserDetails = async (req: Request, res: Response): Promise<Response> => {
+    const user = await this.userService.getUserDetails(req);
+    return baseController.getResult(res, HttpStatusCode.Ok, user);
+  };
+
   public resetPassword = async (req: Request, res: Response): Promise<Response> => {
     const updateCount = await this.userService.resetPassword(req.body);
     return baseController.getResult(res, HttpStatusCode.Ok, updateCount);

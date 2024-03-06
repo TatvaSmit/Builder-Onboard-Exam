@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { IdValidationMessages } from "../../common/helper/common-functions";
 
 export const technologySchema = {
   create: {
@@ -9,6 +10,23 @@ export const technologySchema = {
         "string.max": "name should have at max 20 character",
         "any.required": "name is required",
       }),
+    },
+  },
+  update: {
+    params: {
+      id: Joi.number().integer().positive().required(),
+    },
+    body: {
+      duration: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages(IdValidationMessages("duration")),
+      no_of_questions: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages(IdValidationMessages("no_of_questions")),
     },
   },
 };

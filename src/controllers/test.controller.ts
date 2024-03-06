@@ -19,7 +19,7 @@ export class TestController {
   }
 
   public addTest = async (req: Request, res: Response): Promise<Response> => {
-    const test = await this.testService.addTest(req.body);
+    const test = await this.testService.addTest(req);
     return baseController.getResult(res, HttpStatusCode.Ok, test);
   };
 }

@@ -7,9 +7,11 @@ import { errorHandler } from "./common/helper/middleware";
 import { errors } from "celebrate";
 import { scheduleJob } from "node-schedule";
 import autoSubmit from "./src/auto-submit";
+import cors from "cors";
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 app.use("/", mainRouter);
 app.use(errors());
 app.use(errorHandler);

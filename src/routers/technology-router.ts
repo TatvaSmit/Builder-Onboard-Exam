@@ -7,7 +7,7 @@ import { technologySchema } from "../validation-schemas/technology-schema";
 import { validateAdminUser } from "../../common/helper/middleware";
 import expressAsyncHandler from "express-async-handler";
 
-const { create } = technologySchema;
+const { create, update } = technologySchema;
 const technologyRouter: express.Router = express.Router();
 const repository: TechnologyRepository = new TechnologyRepository();
 const service: TechnologyService = new TechnologyService(repository);
@@ -17,11 +17,20 @@ technologyRouter.get(
   "/getAll",
   expressAsyncHandler(controller.getAllTechnologies as RequestHandler)
 );
+technologyRouter.get(
+  "/getTechnology/:id",
+  expressAsyncHandler(controller.getTechnology as RequestHandler)
+);
 technologyRouter.post(
   "/create",
   validateAdminUser,
   celebrate(create),
   expressAsyncHandler(controller.addNewTechnology as RequestHandler)
 );
-
+technologyRouter.put(
+  "/update/:id",
+  validateAdminUser,
+  celebrate(update),
+  expressAsyncHandler(controller.updateTechnology as RequestHandler)
+);
 export default technologyRouter;

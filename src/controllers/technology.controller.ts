@@ -13,8 +13,18 @@ export class TechnologyController {
     return baseController.getResult(res, HttpStatusCode.Ok, technologies);
   };
 
+  public getTechnology = async (req: Request, res: Response): Promise<Response> => {
+    const technology = await this.technologyService.getTechnology(req);
+    return baseController.getResult(res, HttpStatusCode.Ok, technology);
+  };
+
   public addNewTechnology = async (req: Request, res: Response): Promise<Response> => {
     const technology = await this.technologyService.addNewTechnology(req.body);
     return baseController.getResult(res, HttpStatusCode.Created, technology);
+  };
+
+  public updateTechnology = async (req: Request, res: Response): Promise<Response> => {
+    const technologyUpdateCount = await this.technologyService.updateTechnology(req);
+    return baseController.getResult(res, HttpStatusCode.Ok, technologyUpdateCount);
   };
 }

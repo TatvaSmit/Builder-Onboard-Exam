@@ -18,10 +18,12 @@ questionRouter.get(
   celebrate(questionId),
   expressAsyncHandler(controller.getQuestion as RequestHandler)
 );
-questionRouter.use(validateAdminUser)
+questionRouter.get("/getAll", expressAsyncHandler(controller.getAllQuestions as RequestHandler));
+questionRouter.use(validateAdminUser);
 questionRouter.get(
-  "/getAll",
-  expressAsyncHandler(controller.getAllQuestions as RequestHandler)
+  "/getFullQuestion/:id",
+  celebrate(questionId),
+  expressAsyncHandler(controller.getFullQuestion as RequestHandler)
 );
 questionRouter.post(
   "/create",

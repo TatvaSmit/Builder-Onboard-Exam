@@ -9,12 +9,17 @@ export class QuestionController {
   }
 
   public getAllQuestions = async (req: Request, res: Response): Promise<Response> => {
-    const questions = await this.questionService.getAllQuestions();
+    const questions = await this.questionService.getAllQuestions(req);
     return baseController.getResult(res, HttpStatusCode.Ok, questions);
   };
 
   public getQuestion = async (req: Request, res: Response): Promise<Response> => {
     const question = await this.questionService.getQuestion(req);
+    return baseController.getResult(res, HttpStatusCode.Ok, question);
+  };
+
+  public getFullQuestion = async (req: Request, res: Response): Promise<Response> => {
+    const question = await this.questionService.getFullQuestion(req);
     return baseController.getResult(res, HttpStatusCode.Ok, question);
   };
 

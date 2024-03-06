@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { baseController } from "./base.controller";
-import { HttpErrorType, HttpStatusCode, IErrorResponse, UserRoles } from "./enum";
+import { HttpErrorType, HttpStatusCode, IErrorResponse, UserRequest, UserRoles } from "./enum";
 import jwt from "jsonwebtoken";
 import { SecreteKey } from "../config/app-config";
-import { User } from "../../src";
 import { ThrowError } from "./common-functions";
 import expressAsyncHandler from "express-async-handler";
 
@@ -65,6 +64,14 @@ const getErrorInfo = (error: Error) => {
       errorResponse.message = "answer should match with the one of the provided options";
       errorResponse.statusCode = HttpStatusCode.BadRequest;
       break;
+    case HttpErrorType.PasswordIncorrect:
+      errorResponse.message = "provided user password is invalid";
+      errorResponse.statusCode = HttpStatusCode.BadRequest;
+      break;
+    case HttpErrorType.DuplicateTechnologyName:
+      errorResponse.message = "Technology with the provided name already exists"
+      errorResponse.statusCode = HttpStatusCode.DuplicateEntry
+      break;
     default:
       HttpErrorType.ServerError;
       errorResponse.message = "Internal Server Error";
@@ -72,10 +79,6 @@ const getErrorInfo = (error: Error) => {
   }
   return errorResponse;
 };
-
-interface UserRequest extends Request {
-  user?: User;
-}
 
 const tokenVerifyRequestHandler = async (req: UserRequest, res: Response, next: NextFunction) => {
   let token: string;

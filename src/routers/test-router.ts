@@ -21,7 +21,6 @@ testRouter.get(
 );
 testRouter.post(
   "/create",
-  validateAdminUser,
   celebrate(create),
   expressAsyncHandler(controller.addTest as RequestHandler)
 );

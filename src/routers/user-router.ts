@@ -5,6 +5,7 @@ import { UserController } from "../controllers/user.controller";
 import { celebrate } from "celebrate";
 import { userSchema } from "../validation-schemas/user-schema";
 import expressAsyncHandler from "express-async-handler";
+import { validateTokenHandler } from "../../common/helper/middleware";
 
 const { register, login, resetPassword } = userSchema;
 const userRouter: express.Router = express.Router();
@@ -27,4 +28,6 @@ userRouter.put(
   celebrate(resetPassword),
   expressAsyncHandler(controller.resetPassword as RequestHandler)
 );
+userRouter.use(validateTokenHandler);
+userRouter.get("/getUserDetails", expressAsyncHandler(controller.getUserDetails as RequestHandler));
 export default userRouter;

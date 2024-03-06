@@ -29,6 +29,9 @@ Question.init(
         const optionsString = this.getDataValue("options");
         return optionsString ? JSON.parse(optionsString) : [];
       },
+      set(value) {
+        this.setDataValue("options", JSON.stringify(value));
+      },
     },
     points: {
       type: DataTypes.INTEGER,
