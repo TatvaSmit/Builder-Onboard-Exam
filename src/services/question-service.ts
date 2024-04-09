@@ -14,8 +14,8 @@ export class QuestionService {
   public getAllQuestions = async (req: Request): Promise<Question[]> => {
     const { technology_id } = req.query;
     const where = { technology_id: Number(technology_id) } as WhereOptions;
-    if (Number(technology_id) !== 0) {
-      return  await this.questionRepository.getAllQuestions(where);
+    if (_.isNumber(Number(technology_id)) && Number(technology_id) !== 0) {
+      return await this.questionRepository.getAllQuestions(where);
     } else {
       return await this.questionRepository.getAllQuestions();
     }

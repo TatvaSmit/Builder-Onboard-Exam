@@ -12,7 +12,6 @@ export class TestPerformanceRepository {
   };
 
   public updateTestPerformance = async (params: TestPerformance, id: number): Promise<[number]> => {
-    console.log(params)
     return await db.TestPerformance.update(params, { where: { id } });
   };
 }

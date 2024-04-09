@@ -14,6 +14,7 @@ import { ExamSessions } from "../models/exam_sessions";
 import { TestRepository } from "../repository/test.repository";
 import { WhereOptions } from "sequelize";
 import { QuestionRepository } from "../repository/question.respository";
+import { Question } from "../models/question";
 
 export class TestPerformanceService {
   private readonly testStatsRepository: TestStatsRepository;
@@ -66,13 +67,15 @@ export class TestPerformanceService {
 
   public updateTestPerformance = async (req: Request): Promise<[number] | Error> => {
     const { id } = req.params;
-    const { user_id, test_id, status } = req.body;
-    if (!_.isEqual(status, ExamStatus.completed)) {
+    const { user_id, test_id } = req.body;
+    const where = { id } as WhereOptions;
+    const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
+    const testStatus = _.get(testPerformance,'status',ExamStatus.completed)
+    if (!_.isEqual(testStatus, ExamStatus.completed)) {
       const testStats = await this.testStatsRepository.getTestStats({
         where: { user_id: Number(user_id), test_id: Number(test_id) },
+        include: Question,
       });
-      const where = { id } as WhereOptions;
-      const testPerformance = await this.testPerformanceRepository.getTestPerformance(where);
       const examSession = await ExamSessions.findOne({ where: { test_performance_id: id } });
       if (examSession) {
         await ExamSessions.destroy({ where: { test_performance_id: id } });
@@ -85,16 +88,13 @@ export class TestPerformanceService {
       );
       if (testStats) {
         _.forEach(testStats, async (element: TestStats) => {
-          const question = await this.questionRepository.getFullQuestion({
-            id: _.get(element, "question_id", ""),
-          } as WhereOptions);
+          const question = element.toJSON().question;
           if (!question) return;
           const { selected_answer, correct_answer } = element;
           if (_.isEqual(selected_answer, correct_answer)) {
             score += _.get(question, "points", 0);
           }
         });
-
         return await this.testPerformanceRepository.updateTestPerformance(
           { score, duration, end_time, status: ExamStatus.completed, ...req.body },
           Number(id)

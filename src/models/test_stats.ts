@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./index";
+import { Question } from "./question";
 
 class TestStats extends Model {
   id!: number;
@@ -75,5 +76,5 @@ TestStats.init(
 
 // This table shows question wise user input and its result,
 // It has question id, user id, test id, tech id
-
+TestStats.belongsTo(Question, { foreignKey: "question_id" });
 export { TestStats };

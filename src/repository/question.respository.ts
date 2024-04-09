@@ -4,7 +4,7 @@ import { Question } from "../index";
 
 export class QuestionRepository {
   public getAllQuestions = async (where?: WhereOptions): Promise<Question[]> => {
-    return await db.Question.findAll({ where, raw: true });
+    return await db.Question.findAll({ where, raw: false });
   };
 
   public getQuestion = async (where: WhereOptions): Promise<Question | null> => {
@@ -15,7 +15,7 @@ export class QuestionRepository {
   };
 
   public getFullQuestion = async (where: WhereOptions): Promise<Question | null> => {
-    return await db.Question.findOne({ where, raw: true });
+    return await db.Question.findOne({ where, raw: false });
   };
 
   public addQuestion = async (params: Question): Promise<Question> => {
